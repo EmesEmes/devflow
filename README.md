@@ -8,7 +8,6 @@ Next.js es un framework de desarrollo web fullstack basado en React que permite 
 
 Next.js es escencialmente una extensión de React, que incorpora soluciones preconstruidas, funcionalidades listas para utilizar y funcionalidades adicionales. En otras palabras, Next.js está construido sobre React, ampliando sus capacidades.
 
-
 ## Características Principales
 
 - **Renderizado Híbrido**: Soporte tanto para renderizado del lado del servidor (SSR) como para generación de sitios estáticos (SSG).
@@ -35,59 +34,243 @@ Next.js es escencialmente una extensión de React, que incorpora soluciones prec
 Next.js es una excelente opción para desarrolladores que buscan crear aplicaciones web rápidas, eficientes y optimizadas para SEO, con una experiencia de desarrollo mejorada gracias a sus características avanzadas y su integración con React.
 
 # Instalación
+
 ```
 npx create-next-app@latest
 ```
 
 ## Estructura de un proyecto Next.js
-* `tsconfig.json`: Este es el archivo de configuración de TypeScript. Define qué se debe verificar, qué se debe ignorar y las reglas que se deben seguir.
 
-* `tailwind.config.ts`: Aquí se configura TailwindCSS. Se puede ampliar TailwindCSS personalizando colores, tamaños, sombras, complementos o cualquier otra cosa que se necesite.
+- `tsconfig.json`: Este es el archivo de configuración de TypeScript. Define qué se debe verificar, qué se debe ignorar y las reglas que se deben seguir.
 
-* `README.md`: Un archivo Markdown simple que explica cómo ejecutar el proyecto y proporciona información relevante.
+- `tailwind.config.ts`: Aquí se configura TailwindCSS. Se puede ampliar TailwindCSS personalizando colores, tamaños, sombras, complementos o cualquier otra cosa que se necesite.
 
-* `postcss.config.mjs`: Es un archivo de configuración para PostCSS, una herramienta que se utiliza para procesar CSS con varios plugins o complements. Aquí se puede ver que menciona tailwindcss como plugin, lo que  permite usar sus primeras clases de utilidad en el proyecto.
+- `README.md`: Un archivo Markdown simple que explica cómo ejecutar el proyecto y proporciona información relevante.
 
-* `package-lock.json`: Es un archivo que bloquea las versiones de las dependencias y sus subdependencias, garantizando que todos los que trabajan en el proyecto utilicen exactamente las mismas versiones.
+- `postcss.config.mjs`: Es un archivo de configuración para PostCSS, una herramienta que se utiliza para procesar CSS con varios plugins o complements. Aquí se puede ver que menciona tailwindcss como plugin, lo que permite usar sus primeras clases de utilidad en el proyecto.
 
-* `package.json`: Este archivo contiene todas las dependencias y scripts del proyecto.
+- `package-lock.json`: Es un archivo que bloquea las versiones de las dependencias y sus subdependencias, garantizando que todos los que trabajan en el proyecto utilicen exactamente las mismas versiones.
 
-* `next-env.d.ts`: Es un archivo de declaración de TypeScript para Next.js. Y como se dice aquí, no se debe modificar ni poner ningún tipo de TypeScript aquí. Es específicamente para Next.js.
+- `package.json`: Este archivo contiene todas las dependencias y scripts del proyecto.
 
-* `next.config.ts`: Este archivo permite configurar características de Next.js, como opciones experimentales, configuraciones de imagen, configuraciones de compilación y otras.
+- `next-env.d.ts`: Es un archivo de declaración de TypeScript para Next.js. Y como se dice aquí, no se debe modificar ni poner ningún tipo de TypeScript aquí. Es específicamente para Next.js.
 
-* `.gitignore`: Este archivo contiene los archivos y carpetas que git ignorará en el manejo de versiones.
+- `next.config.ts`: Este archivo permite configurar características de Next.js, como opciones experimentales, configuraciones de imagen, configuraciones de compilación y otras.
 
-* `.eslintrc.json`: Para configurar ESLint
+- `.gitignore`: Este archivo contiene los archivos y carpetas que git ignorará en el manejo de versiones.
 
-* `public`: Un lugar para archivos estáticos. Coloqcar siempre aquí imágenes y otros datos estáticos.
+- `.eslintrc.json`: Para configurar ESLint
 
-* `node_modules`: Es una carpeta que contiene todas las dependencias (paquetes) y el código necesario para ejecutar la aplicación.
+- `public`: Un lugar para archivos estáticos. Coloqcar siempre aquí imágenes y otros datos estáticos.
 
-* `app`: La carpeta `app` en un proyecto Next.js contiene las rutas y componentes de la aplicación organizados de manera modular. Aquí hay una descripción de los elementos comunes que puedes encontrar en esta carpeta:
+- `node_modules`: Es una carpeta que contiene todas las dependencias (paquetes) y el código necesario para ejecutar la aplicación.
 
-    * `fonts`: Aquí se puede almacenar archivos de fuentes, importarlos a la aplicación y usarlos fácilmente. Tus propias fuentes alojadas.
+- `app`: La carpeta `app` en un proyecto Next.js contiene las rutas y componentes de la aplicación organizados de manera modular. Aquí hay una descripción de los elementos comunes que puedes encontrar en esta carpeta:
 
-    * `favicon.ico`: Cualquier archivo con este nombre en la raíz de la carpeta de la aplicación se convertirá en el favicono del sitio web. Es una convención de nombres de Next.js para agregar faviconos.
+  - `fonts`: Aquí se puede almacenar archivos de fuentes, importarlos a la aplicación y usarlos fácilmente. Tus propias fuentes alojadas.
 
-    * `globals.css`: Aquí es donde se puede escribir todas las utilidades CSS o TailwindCSS personalizadas.
+  - `favicon.ico`: Cualquier archivo con este nombre en la raíz de la carpeta de la aplicación se convertirá en el favicono del sitio web. Es una convención de nombres de Next.js para agregar faviconos.
 
-    * `layout.tsx`: Este es el punto de entrada principal de la aplicación. Todo lo que se haga aquí se aplicará en todas las páginas y rutas. Por eso, se ha importado fuentes, estilos e información de metadatos aquí.
+  - `globals.css`: Aquí es donde se puede escribir todas las utilidades CSS o TailwindCSS personalizadas.
 
-    * `page.tsx`: Este archivo representa la página de inicio o `/` ruta del sitio.
+  - `layout.tsx`: Este es el punto de entrada principal de la aplicación. Todo lo que se haga aquí se aplicará en todas las páginas y rutas. Por eso, se ha importado fuentes, estilos e información de metadatos aquí.
+
+  - `page.tsx`: Este archivo representa la página de inicio o `/` ruta del sitio.
+
+# Configurar ESlint & Prettier
+
+## Agregar JavaScript Standar Style
+
+[Enlace](https://standardjs.com/rules.html)
+
+`npm install eslint-config-standard`
+
+- Agregar Standard a .eslintrc.json
+
+```json
+{
+  "extends": ["next/core-web-vitals", "next/typescript", "standard"]
+}
+```
+
+## Agregar plugin para tailwind
+
+Formatea las clases de tailwind de forma ordenada.
+
+`npm install eslint-plugin-tailwindcss`
+
+- Agregar el plugin a .eslintrc.json
+
+```json
+{
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript",
+    "standard",
+    "plugin:tailwindcss/recommended"
+  ]
+}
+```
+
+## Instalar Prettier
+
+`npm install prettier`
+
+- Instalar la configuración de Prettier para ESlint
+
+`npm install eslint-config-prettier`
+
+- Agregar Prettier a eslintrc.json
+
+```json
+{
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript",
+    "standard",
+    "plugin:tailwindcss/recommended",
+    "prettier"
+  ]
+}
+```
+
+## Integrar ESlint y Prettier en VSCode
+
+Ayuda a aplicar recomendaciones de ESlint y Prettier cada que se guarda o se sale de un archivo.
+
+1. Crear una cartepa llamada `.vscode` y agregar un archivo `settings.json`
+
+2. En el archivo agregar:
+
+```json
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
+}
+```
+
+3. Configuración recomendada para el curso:
+
+```json
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.addMissingImports": "explicit"
+  },
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false,
+  "prettier.semi": true,
+  "prettier.singleQuote": false,
+  "prettier.jsxSingleQuote": false,
+  "prettier.trailingComma": "es5",
+  "prettier.arrowParens": "always",
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
+}
+```
+
+## Manejar el orden de los imports
+
+`npm install eslint-plugin-import --save-dev`
+
+- Agregar a eslintrc.json
+
+```json
+{
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript",
+    "standard",
+    "plugin:tailwindcss/recommended",
+    "prettier"
+  ],
+  "plugins": ["import"]
+}
+```
+
+## Reglas de Eslint recomendades del curso
+
+```json
+{
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript",
+    "standard",
+    "plugin:tailwindcss/recommended",
+    "prettier"
+  ],
+  "plugins": ["import"],
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin", // Built-in types are first
+          "external", // External libraries
+          "internal", // Internal modules
+          ["parent", "sibling"], // Parent and sibling types can be mingled together
+          "index", // Then the index file
+          "object" // Object imports
+        ],
+        "newlines-between": "always",
+        "pathGroups": [
+          {
+            "pattern": "@app/**",
+            "group": "external",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin"],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+  },
+  "ignorePatterns": ["components/ui/**"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "no-undef": "off"
+      }
+    }
+  ]
+}
+```
+
+> Para que todo funcione bien se debe tener instalado las siguientes extenciones en VSCode: ESlint - Microsoft | Prettier - Prettier | Prettier Eslint - Rebecca Vest
 
 # React client/server Components
 
 ## React Server Components (RSC)
+
 Los Server Components se procesan en el servidor y su output HTML se envía al cliente. Dado que se procesan en el servidor, pueden acceder directamente a los recursos del servidor, como las bases de datos o el sistema de archivos. Esto ayuda a reducir la cantidad de JavaScript enviado al cliente, lo que mejora el rendimiento.
 
-Los Server Components son útiles cuando: 
-* Se necesita acceso directo a los recursos del lado del servidor (como acceder a archivos en un sistema de archivos)
-* Se desea mantener información confidencial, como tokens de acceso, segura en el servidor.
+Los Server Components son útiles cuando:
+
+- Se necesita acceso directo a los recursos del lado del servidor (como acceder a archivos en un sistema de archivos)
+- Se desea mantener información confidencial, como tokens de acceso, segura en el servidor.
 
 Si el componente requiere interactividad del navegador, como hacer clic en botones, navegar a diferentes páginas y enviar formularios, entonces debe convertirlo en un componente de cliente.
 
 ## React Client Component
+
 Los Client Components son renderizados en el lado del cliente (en el navegador). Para usarlos en Next.js, se debe agregar la bandera `"use client"` en la parte superior del componente.
 
 Los componentes del servidor se renderizan solo en el lado del servidor, mientras que los componentes del cliente se renderizan previamente en el servidor para crear un shell estático y luego se hidratan en el lado del cliente.
@@ -101,23 +284,29 @@ Esto significa que todo dentro del componente del cliente que no requiere intera
 # Tipos de renderizado
 
 ## SSR Server Side Rendering
+
 SSR (Server-Side Rendering) es una técnica de renderizado en la que las páginas web se generan en el servidor en lugar de en el cliente. En el contexto de Next.js, SSR permite que las páginas se rendericen en el servidor con cada solicitud, lo que puede mejorar el rendimiento y la optimización para motores de búsqueda (SEO). Esto significa que el contenido de la página está completamente renderizado antes de ser enviado al navegador del usuario, lo que puede resultar en tiempos de carga más rápidos y una mejor experiencia de usuario.
 
 ## SSG Static Site Generation
+
 SSG (Static Site Generation) es una técnica de renderizado en la que las páginas web se generan en tiempo de compilación y se sirven como archivos HTML estáticos. En el contexto de Next.js, SSG permite pre-renderizar páginas en el momento de la construcción, lo que resulta en tiempos de carga extremadamente rápidos y una mejor escalabilidad. Las páginas generadas de esta manera pueden ser servidas directamente desde un CDN, lo que mejora aún más el rendimiento y la experiencia del usuario.
 
 ## CSR Client-Side Rendering
+
 CSR (Client-Side Rendering) es una técnica de renderizado en la que las páginas web se generan en el navegador del cliente utilizando JavaScript. En el contexto de Next.js, CSR significa que el contenido de la página se carga y se renderiza en el navegador después de que se haya descargado el JavaScript necesario. Esto puede resultar en tiempos de carga iniciales más lentos en comparación con SSR y SSG, pero permite una experiencia de usuario más interactiva y dinámica una vez que la página ha sido cargada.
 
 ## ISR Incremental Static Regeneration
+
 ISR (Incremental Static Regeneration) es una técnica de renderizado que combina lo mejor de SSG y SSR. En el contexto de Next.js, ISR permite actualizar el contenido estático de una página después de la construcción inicial sin necesidad de reconstruir todo el sitio. Esto se logra regenerando las páginas estáticas en el servidor de manera incremental, basándose en un intervalo de tiempo configurado. Esto permite que las aplicaciones Next.js tengan contenido actualizado y dinámico con el rendimiento de un sitio estático.
 
-## PPR Partial Prerendering 
+## PPR Partial Prerendering
+
 El "partial prerendering" (pre-renderizado parcial) es una técnica utilizada en frameworks como Next.js para mejorar el rendimiento y la experiencia del usuario al renderizar solo una parte de la página en el servidor antes de enviarla al cliente. Esto permite que ciertas partes de la página se generen estáticamente en el servidor, mientras que otras partes se renderizan dinámicamente en el cliente.
 
 En el contexto de Next.js, el pre-renderizado parcial puede combinar técnicas como SSR (Server-Side Rendering) y SSG (Static Site Generation) para renderizar partes de la página en el servidor y otras en el cliente. Esto es útil cuando algunas partes de la página necesitan ser dinámicas y otras pueden ser estáticas.
 
 ## Dynamic Routing
+
 El enrutamiento dinámico (Dynamic Routing) es una técnica en la que las rutas de una aplicación web se generan de manera dinámica en lugar de estar predefinidas. En el contexto de Next.js, el enrutamiento dinámico permite crear rutas basadas en datos o parámetros variables. Esto se logra utilizando corchetes en los nombres de los archivos dentro de la carpeta `pages`, lo que permite capturar segmentos de la URL como parámetros.
 
 Por ejemplo, para crear una ruta dinámica para perfiles de usuario, puedes crear un archivo llamado `[id].js` dentro de la carpeta `pages/users`. Esto capturará cualquier segmento de URL después de `/users/` como un parámetro `id`.
