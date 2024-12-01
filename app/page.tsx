@@ -1,7 +1,8 @@
 const Home = () => {
   return (
     <>
-      <h1 className="text-3xl text-primary-500 font-black">Hola mundo</h1>
+      <h1 className="h1-bold">Hola mundo</h1>
+      <h1 className="font-space-grotesk">Hola mundogg</h1>
     </>
   );
 };
