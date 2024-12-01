@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js
 
-## Getting Started
+Next.js es un framework de desarrollo web fullstack basado en React que permite la creación de aplicaciones web estáticas y generadas desde el servidor. Ofrece una serie de características avanzadas que mejoran el rendimiento, la optimización para motores de búsqueda (SEO), la separación de código, el enrutamiento y la gestión de dependencias.
 
-First, run the development server:
+> Un framework sirve como herramienta, equipada con reglas y convenciones predefinidas que ofrece un enfoque estructuado para construir una aplicación. Proporciona un entorno que delinea la arquitectura general, los patrones de diseño y los flujos de trabajo, permitiendo a los desarrolladores centrarse en la implementación de lógica específica de la aplicación en lugar de ocuparse del diseño a bajo nivel.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+> Un framework proporciona un marco de trabajo con soluciones precontruidas para funcionalidades comunes como la integración de bases de datos, gestión de enrutamiento, manejo de autenticación, etc
+
+Next.js es escencialmente una extensión de React, que incorpora soluciones preconstruidas, funcionalidades listas para utilizar y funcionalidades adicionales. En otras palabras, Next.js está construido sobre React, ampliando sus capacidades.
+
+
+## Características Principales
+
+- **Renderizado Híbrido**: Soporte tanto para renderizado del lado del servidor (SSR) como para generación de sitios estáticos (SSG).
+- **Optimización Automática**: Optimiza automáticamente las páginas para mejorar el rendimiento y la experiencia del usuario.
+- **Enrutamiento Basado en Páginas**: Sistema de enrutamiento basado en la estructura de archivos, lo que facilita la creación de rutas.
+- **Soporte para API**: Permite crear API endpoints directamente en la aplicación Next.js.
+- **CSS y Sass**: Soporte incorporado para CSS y Sass, así como para módulos CSS.
+- **Despliegue Fácil**: Integración con plataformas de despliegue como Vercel para un despliegue rápido y sencillo.
+
+## Ventajas
+
+- **Mejoras de Rendimiento**: Next.js optimiza automáticamente las aplicaciones para mejorar el rendimiento.
+- **SEO Mejorado**: Gracias al renderizado del lado del servidor, las aplicaciones Next.js son más amigables para los motores de búsqueda.
+- **Separación de Código**: Carga solo el código necesario para cada página, lo que reduce el tamaño de los paquetes y mejora la velocidad de carga.
+- **Enrutamiento Simplificado**: El sistema de enrutamiento basado en archivos facilita la creación y gestión de rutas.
+- **Gestión de Dependencias**: Maneja las dependencias de manera eficiente, asegurando que solo se carguen las necesarias.
+
+## Recursos
+
+- [Documentación Oficial](https://nextjs.org/docs)
+- [Repositorio en GitHub](https://github.com/vercel/next.js)
+- [Ejemplos y Tutoriales](https://nextjs.org/learn)
+
+Next.js es una excelente opción para desarrolladores que buscan crear aplicaciones web rápidas, eficientes y optimizadas para SEO, con una experiencia de desarrollo mejorada gracias a sus características avanzadas y su integración con React.
+
+# Instalación
+```
+npx create-next-app@latest
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Estructura de un proyecto Next.js
+* `tsconfig.json`: Este es el archivo de configuración de TypeScript. Define qué se debe verificar, qué se debe ignorar y las reglas que se deben seguir.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* `tailwind.config.ts`: Aquí se configura TailwindCSS. Se puede ampliar TailwindCSS personalizando colores, tamaños, sombras, complementos o cualquier otra cosa que se necesite.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* `README.md`: Un archivo Markdown simple que explica cómo ejecutar el proyecto y proporciona información relevante.
 
-## Learn More
+* `postcss.config.mjs`: Es un archivo de configuración para PostCSS, una herramienta que se utiliza para procesar CSS con varios plugins o complements. Aquí se puede ver que menciona tailwindcss como plugin, lo que  permite usar sus primeras clases de utilidad en el proyecto.
 
-To learn more about Next.js, take a look at the following resources:
+* `package-lock.json`: Es un archivo que bloquea las versiones de las dependencias y sus subdependencias, garantizando que todos los que trabajan en el proyecto utilicen exactamente las mismas versiones.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* `package.json`: Este archivo contiene todas las dependencias y scripts del proyecto.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* `next-env.d.ts`: Es un archivo de declaración de TypeScript para Next.js. Y como se dice aquí, no se debe modificar ni poner ningún tipo de TypeScript aquí. Es específicamente para Next.js.
 
-## Deploy on Vercel
+* `next.config.ts`: Este archivo permite configurar características de Next.js, como opciones experimentales, configuraciones de imagen, configuraciones de compilación y otras.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* `.gitignore`: Este archivo contiene los archivos y carpetas que git ignorará en el manejo de versiones.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* `.eslintrc.json`: Para configurar ESLint
+
+* `public`: Un lugar para archivos estáticos. Coloqcar siempre aquí imágenes y otros datos estáticos.
+
+* `node_modules`: Es una carpeta que contiene todas las dependencias (paquetes) y el código necesario para ejecutar la aplicación.
+
+* `app`: La carpeta `app` en un proyecto Next.js contiene las rutas y componentes de la aplicación organizados de manera modular. Aquí hay una descripción de los elementos comunes que puedes encontrar en esta carpeta:
+
+    * `fonts`: Aquí se puede almacenar archivos de fuentes, importarlos a la aplicación y usarlos fácilmente. Tus propias fuentes alojadas.
+
+    * `favicon.ico`: Cualquier archivo con este nombre en la raíz de la carpeta de la aplicación se convertirá en el favicono del sitio web. Es una convención de nombres de Next.js para agregar faviconos.
+
+    * `globals.css`: Aquí es donde se puede escribir todas las utilidades CSS o TailwindCSS personalizadas.
+
+    * `layout.tsx`: Este es el punto de entrada principal de la aplicación. Todo lo que se haga aquí se aplicará en todas las páginas y rutas. Por eso, se ha importado fuentes, estilos e información de metadatos aquí.
+
+    * `page.tsx`: Este archivo representa la página de inicio o `/` ruta del sitio.
+
+# React client/server Components
+
+## React Server Components (RSC)
+Los Server Components se procesan en el servidor y su output HTML se envía al cliente. Dado que se procesan en el servidor, pueden acceder directamente a los recursos del servidor, como las bases de datos o el sistema de archivos. Esto ayuda a reducir la cantidad de JavaScript enviado al cliente, lo que mejora el rendimiento.
+
+Los Server Components son útiles cuando: 
+* Se necesita acceso directo a los recursos del lado del servidor (como acceder a archivos en un sistema de archivos)
+* Se desea mantener información confidencial, como tokens de acceso, segura en el servidor.
+
+Si el componente requiere interactividad del navegador, como hacer clic en botones, navegar a diferentes páginas y enviar formularios, entonces debe convertirlo en un componente de cliente.
+
+## React Client Component
+Los Client Components son renderizados en el lado del cliente (en el navegador). Para usarlos en Next.js, se debe agregar la bandera `"use client"` en la parte superior del componente.
+
+Los componentes del servidor se renderizan solo en el lado del servidor, mientras que los componentes del cliente se renderizan previamente en el servidor para crear un shell estático y luego se hidratan en el lado del cliente.
+
+> La hidratación (hydration) en Next.js es el proceso mediante el cual el código JavaScript del lado del cliente toma el control de una página que ha sido pre-renderizada en el servidor. Esto permite que la página se vuelva interactiva. En otras palabras, después de que el HTML estático ha sido enviado al navegador y renderizado, React se "hidrata" sobre ese HTML, adjuntando los manejadores de eventos y convirtiendo la página en una aplicación React completamente funcional.
+
+Esto significa que todo dentro del componente del cliente que no requiere interactividad o no depende del navegador se renderiza en el servidor. El código o las partes que dependen del navegador o requieren interactividad se dejan como marcadores de posición durante la renderización previa del lado del servidor. Cuando esto llega al cliente, el navegador renderiza los componentes del cliente y completa los marcadores de posición que dejó el servidor.
+
+> Por eso un console.log de un client component también se muestra en el terminal.
+
+# Tipos de renderizado
+
+## SSR Server Side Rendering
+SSR (Server-Side Rendering) es una técnica de renderizado en la que las páginas web se generan en el servidor en lugar de en el cliente. En el contexto de Next.js, SSR permite que las páginas se rendericen en el servidor con cada solicitud, lo que puede mejorar el rendimiento y la optimización para motores de búsqueda (SEO). Esto significa que el contenido de la página está completamente renderizado antes de ser enviado al navegador del usuario, lo que puede resultar en tiempos de carga más rápidos y una mejor experiencia de usuario.
+
+## SSG Static Site Generation
+SSG (Static Site Generation) es una técnica de renderizado en la que las páginas web se generan en tiempo de compilación y se sirven como archivos HTML estáticos. En el contexto de Next.js, SSG permite pre-renderizar páginas en el momento de la construcción, lo que resulta en tiempos de carga extremadamente rápidos y una mejor escalabilidad. Las páginas generadas de esta manera pueden ser servidas directamente desde un CDN, lo que mejora aún más el rendimiento y la experiencia del usuario.
+
+## CSR Client-Side Rendering
+CSR (Client-Side Rendering) es una técnica de renderizado en la que las páginas web se generan en el navegador del cliente utilizando JavaScript. En el contexto de Next.js, CSR significa que el contenido de la página se carga y se renderiza en el navegador después de que se haya descargado el JavaScript necesario. Esto puede resultar en tiempos de carga iniciales más lentos en comparación con SSR y SSG, pero permite una experiencia de usuario más interactiva y dinámica una vez que la página ha sido cargada.
+
+## ISR Incremental Static Regeneration
+ISR (Incremental Static Regeneration) es una técnica de renderizado que combina lo mejor de SSG y SSR. En el contexto de Next.js, ISR permite actualizar el contenido estático de una página después de la construcción inicial sin necesidad de reconstruir todo el sitio. Esto se logra regenerando las páginas estáticas en el servidor de manera incremental, basándose en un intervalo de tiempo configurado. Esto permite que las aplicaciones Next.js tengan contenido actualizado y dinámico con el rendimiento de un sitio estático.
+
+## PPR Partial Prerendering 
+El "partial prerendering" (pre-renderizado parcial) es una técnica utilizada en frameworks como Next.js para mejorar el rendimiento y la experiencia del usuario al renderizar solo una parte de la página en el servidor antes de enviarla al cliente. Esto permite que ciertas partes de la página se generen estáticamente en el servidor, mientras que otras partes se renderizan dinámicamente en el cliente.
+
+En el contexto de Next.js, el pre-renderizado parcial puede combinar técnicas como SSR (Server-Side Rendering) y SSG (Static Site Generation) para renderizar partes de la página en el servidor y otras en el cliente. Esto es útil cuando algunas partes de la página necesitan ser dinámicas y otras pueden ser estáticas.
+
+## Dynamic Routing
+El enrutamiento dinámico (Dynamic Routing) es una técnica en la que las rutas de una aplicación web se generan de manera dinámica en lugar de estar predefinidas. En el contexto de Next.js, el enrutamiento dinámico permite crear rutas basadas en datos o parámetros variables. Esto se logra utilizando corchetes en los nombres de los archivos dentro de la carpeta `pages`, lo que permite capturar segmentos de la URL como parámetros.
+
+Por ejemplo, para crear una ruta dinámica para perfiles de usuario, puedes crear un archivo llamado `[id].js` dentro de la carpeta `pages/users`. Esto capturará cualquier segmento de URL después de `/users/` como un parámetro `id`.
