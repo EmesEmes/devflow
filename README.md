@@ -310,3 +310,94 @@ En el contexto de Next.js, el pre-renderizado parcial puede combinar técnicas c
 El enrutamiento dinámico (Dynamic Routing) es una técnica en la que las rutas de una aplicación web se generan de manera dinámica en lugar de estar predefinidas. En el contexto de Next.js, el enrutamiento dinámico permite crear rutas basadas en datos o parámetros variables. Esto se logra utilizando corchetes en los nombres de los archivos dentro de la carpeta `pages`, lo que permite capturar segmentos de la URL como parámetros.
 
 Por ejemplo, para crear una ruta dinámica para perfiles de usuario, puedes crear un archivo llamado `[id].js` dentro de la carpeta `pages/users`. Esto capturará cualquier segmento de URL después de `/users/` como un parámetro `id`.
+
+# File Based Routing
+
+En Next.js 15, el enrutamiento basado en archivos (File Based Routing) sigue siendo una característica fundamental. La estructura y el funcionamiento son similares a las versiones anteriores, donde la estructura de archivos dentro de la carpeta pages define automáticamente las rutas de la aplicación.
+
+Las carpetas dentro de la carpeta `app` se convierten en rutas, dentro de estas carpetas se debe crear un archivo llamado `page` con extención js, jsx o tsx, que es el que contendra el código de esa ruta
+
+## Nested Routes
+
+En Next.js 15, las rutas anidadas permiten organizar y estructurar mejor las rutas de tu aplicación mediante la creación de subcarpetas dentro de la carpeta app. Esto facilita la creación de rutas jerárquicas y más complejas.
+
+- app/
+  - page.js
+  - about/
+    - page.js
+  - blog/
+    - page.js
+    - [postId]/
+      - page.js
+  - users/
+    - page.js
+    - [id]/
+      - page.js
+
+### Ventajas de las rutas anidadas
+
+1. Organización: Mejora la organización del código al agrupar archivos relacionados.
+
+2. Escalabilidad: Facilita la gestión de rutas complejas y jerárquicas.
+
+3. Claridad: La estructura de carpetas refleja la estructura de rutas de la aplicación, lo que hace que el código sea más fácil de entender y mantener.
+
+## Dinamic Routes
+
+Las rutas dinámicas en Next.js 15 permiten crear rutas basadas en parámetros variables, lo que es útil para manejar contenido dinámico como perfiles de usuario, publicaciones de blog, etc. Estas rutas se definen utilizando corchetes en los nombres de las carpetas dentro de la carpeta app.
+
+- app/
+  - page.js
+  - about/
+    - page.js
+  - blog/
+    - page.js
+    - [postId]/ `RUTA DINÁMICA`
+      - page.js
+  - users/
+    - page.js
+    - [id]/
+      - page.js
+
+### Cómo funciona
+
+1. Definición de Rutas: Utiliza corchetes en los nombres de las carpetas para definir segmentos de URL dinámicos.
+
+2. Acceso a Parámetros: Los parámetros de la URL se pueden acceder a través de `params` en el componente.
+
+### Ventajas de las rutas dinámicas
+
+1. Flexibilidad: Permite manejar rutas que dependen de datos dinámicos.
+
+2. Escalabilidad: Facilita la creación de aplicaciones con contenido dinámico sin necesidad de definir manualmente cada ruta.
+
+## Route Groups
+
+Son una característica que permite agrupar rutas relacionadas bajo una misma estructura, sin afectar la URL final. Esto es útil para organizar mejor el código y aplicar configuraciones específicas a un grupo de rutas.
+
+- app/
+  - (admin)/
+    - dashboard/
+      - page.js
+    - users/
+      - page.js
+  - (marketing)/
+    - blog/
+      - page.js
+    - contact/
+      - page.js
+  - page.js
+
+### Cómo funciona
+
+1. Definición de Grupos: Los grupos de rutas se definen utilizando paréntesis en los nombres de las carpetas.
+
+2. URL Final: Las carpetas de grupo no afectan la URL final de las rutas.
+
+### Ventajas de los Route Groups
+
+1. Organización: Mejora la organización del código al agrupar rutas relacionadas.
+
+2. Configuración: Permite aplicar configuraciones específicas a un grupo de rutas.
+
+3. Claridad: Facilita la comprensión de la estructura de la aplicación sin afectar las URLs.
