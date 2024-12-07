@@ -401,3 +401,238 @@ Son una característica que permite agrupar rutas relacionadas bajo una misma es
 2. Configuración: Permite aplicar configuraciones específicas a un grupo de rutas.
 
 3. Claridad: Facilita la comprensión de la estructura de la aplicación sin afectar las URLs.
+
+# Autenticación y Autorización
+
+La autenticación y la autorización son dos conceptos esenciales en la seguridad web.
+
+La `autenticación` es el proceso de verificar la identidad de un usuario. Garantiza que la persona o entidad que accede al sistema es quien dice ser.
+
+Por otro lado, la `autorización` determina qué acciones puede realizar un usuario dentro del sistema después de haber sido autenticado. Define los permisos y los niveles de acceso otorgados a los usuarios en función de su identidad y función.
+
+# Autenticación
+
+Es fundamental para proteger la información confidencial y garantizar que solo los usuarios autorizados puedan acceder a ella. Es la primera línea de defensa contra el acceso no autorizado y las violaciones de datos.
+
+Sin una autenticación adecuada, cualquiera podría acceder a su sistema y potencialmente robar o manipular sus datos. Esto podría generar pérdidas financieras, daños a la reputación y consecuencias legales.
+
+## Tipos de Autenticación
+
+### Basado en Sesiones
+
+Con la autenticación basada en sesiones, se crea una sesión en el servidor para cada usuario después de que inicia sesión. Luego, el servidor envía un identificador de sesión único (generalmente almacenado como una cookie) al cliente, que se utiliza para solicitudes posteriores para autenticar al usuario.
+
+Una cookie es un pequeño fragmento de datos que un servidor web envía al navegador web de un usuario. El navegador almacena estos datos y los envía de vuelta con cada solicitud posterior al mismo servidor. Las cookies se utilizan habitualmente para diversos fines, entre ellos, la gestión de sesiones, el seguimiento de las preferencias del usuario y la personalización de las experiencias del usuario.
+
+Se puede pensar en las cookies como una forma que tienen los sitios web de recordar a los usuarios y sus preferencias en diferentes sesiones.
+
+#### Flujo de trabajo
+
+1. Cuando un usuario inicia sesión, el servidor genera un ID de sesión único y almacena datos de la sesión (como ID de usuario, tiempo de expiración, etc.) en el lado del servidor.
+2. El servidor establece una cookie en la respuesta que contiene el ID de la sesión.
+3. Para solicitudes posteriores, el cliente envía el ID de sesión junto con la solicitud.
+4. El servidor verifica el ID de sesión con los datos de sesión almacenados para autenticar al usuario.
+
+#### Ventajas
+
+1. Seguro: los datos de la sesión se almacenan en el servidor, lo que reduce el riesgo de robo de tokens.
+2. Fácil de implementar: muchos marcos web proporcionan soporte integrado para la gestión de sesiones.
+3. Caducidad automática: las sesiones se pueden configurar para que caduquen después de un período determinado, lo que mejora la seguridad.
+
+#### Contras
+
+1. Problemas de escalabilidad: almacenar datos de sesión en el servidor puede generar problemas de escalabilidad, especialmente en sistemas distribuidos.
+2. Almacenamiento del lado del servidor: requiere recursos del servidor para administrar los datos de la sesión, lo que aumenta la carga del servidor.
+3. Vulnerable a ataques CSRF: los identificadores de sesión almacenados en cookies pueden ser susceptibles a ataques CSRF si no se protegen adecuadamente.
+
+### Basado en tokens (JWT)
+
+En la autenticación basada en tokens, se genera un token que contiene información del usuario al iniciar sesión correctamente y se envía al cliente. Este token se incluye luego en solicitudes posteriores para autenticar al usuario.
+
+#### Flujo de trabajo
+
+1. Tras una autenticación exitosa, el servidor genera un JWT que contiene información del usuario y lo firma con una clave secreta.
+2. El servidor envía el JWT al cliente, generalmente en el cuerpo de la respuesta o como encabezado.
+3. El cliente incluye el JWT en el encabezado de las solicitudes posteriores.
+4. El servidor verifica la firma del JWT y decodifica su carga útil para autenticar al usuario.
+
+#### Ventajas
+
+1. Sin estado: los tokens contienen toda la información necesaria para la autenticación, lo que elimina la necesidad de almacenamiento del lado del servidor.
+2. Escalable: los tokens se pueden distribuir fácilmente en múltiples servidores, lo que mejora la escalabilidad.
+3. Seguridad mejorada: los tokens se pueden cifrar y firmar para evitar manipulaciones y accesos no autorizados.
+
+#### Contras
+
+1. Gestión de tokens: requiere un esfuerzo adicional para gestionar el ciclo de vida del token, incluida la expiración y la revocación.
+2. Tamaño del token: los tokens pueden ser más grandes que los identificadores de sesión, lo que aumenta la sobrecarga de la red.
+3. Vulnerable al robo de tokens: si no se protegen adecuadamente (por ejemplo, a través de HTTPS), los tokens pueden ser interceptados y utilizados por actores maliciosos.
+
+### OAuth
+
+OAuth es un protocolo de autorización delegada que permite que servicios de terceros accedan a los recursos de un usuario sin exponer sus credenciales. Los usuarios pueden otorgar acceso limitado a sus datos a aplicaciones externas.
+
+#### Flujo de trabajo
+
+1. Registre su aplicación con el proveedor OAuth y obtenga las credenciales del cliente (ID de cliente y secreto de cliente).
+2. Redirigir a los usuarios al punto final de autenticación del proveedor OAuth.
+3. Después de la autenticación, el proveedor OAuth redirige al usuario a su aplicación con un código de autorización.
+4. Cambie el código de autorización por un token de acceso y, opcionalmente, un token de actualización.
+5. Utilice el token de acceso para acceder a los recursos del usuario en nombre del usuario.
+
+#### Ventajas
+
+1. Inicio de sesión único (SSO): los usuarios pueden acceder a múltiples servicios con un único conjunto de credenciales, lo que mejora la experiencia del usuario.
+2. Permisos granulares: los usuarios pueden otorgar acceso limitado a sus recursos, mejorando la privacidad y la seguridad.
+3. Ampliamente compatible: OAuth es un estándar ampliamente adoptado y utilizado por muchos servicios y plataformas populares.
+
+#### Contras
+
+1. Complejidad: Implementar OAuth puede ser complejo y requerir comprensión del protocolo y sus diversos flujos.
+2. Dependencia de confianza: los usuarios deben confiar en servicios de terceros para acceder a sus datos, lo que genera preocupaciones sobre la privacidad.
+3. Gestión de tokens: requiere el manejo de tokens de acceso y tokens de actualización, lo que agrega complejidad al flujo de autenticación.
+
+### Autenticación básica
+
+La autenticación básica implica que los usuarios proporcionen sus credenciales (nombre de usuario y contraseña) en cada solicitud, que se codifican y se envían al servidor. Es simple pero menos seguro en comparación con otros métodos.
+
+#### Flujo de trabajo
+
+1. Los clientes codifican el nombre de usuario y la contraseña en una cadena codificada en Base64 y la incluyen en el encabezado de la solicitud.
+2. El servidor decodifica la cadena, extrae las credenciales y las valida con las credenciales almacenadas.
+
+#### Ventajas
+
+1. Fácil de implementar: requiere una instalación y configuración mínimas, lo que hace que sea fácil comenzar.
+2. Soporte universal: la autenticación básica es compatible con prácticamente todos los navegadores y servidores web.
+3. Sin gestión de sesiones: no requiere almacenamiento del lado del servidor ni gestión de sesiones, lo que reduce la carga del servidor.
+
+#### Contras
+
+1. Falta de seguridad: Las credenciales se envían con cada solicitud, lo que aumenta el riesgo de interceptación y acceso no autorizado.
+2. Sin cifrado: las credenciales se envían en texto sin formato, lo que las hace vulnerables a la interceptación.
+3. Funcionalidad limitada: no admite funciones como administración de sesiones o permisos granulares, lo que limita su uso en aplicaciones complejas.
+
+> Evitar utilizar la autenticación básica para aplicaciones sensibles, ya que las credenciales se envían con cada solicitud, lo que las hace susceptibles a ser interceptadas.
+
+> Estos métodos de autenticación tienen distintos propósitos y distintos niveles de seguridad y complejidad. La elección del método adecuado depende de factores como los requisitos de la aplicación, las consideraciones de seguridad y la experiencia del usuario.
+
+## Mecanismos de gestión de estado HTTP
+
+Mecanismos de gestión de estado HTTP
+HTTP es un protocolo sin estado, lo que significa que no mantiene el estado entre solicitudes. Sin embargo, las aplicaciones web suelen requerir el mantenimiento del estado para administrar las sesiones de los usuarios, realizar un seguimiento de sus preferencias y personalizar sus experiencias.
+
+Para abordar esto, se han desarrollado varios mecanismos de gestión de estado, incluidas cookies, almacenamiento local, almacenamiento de sesiones y más.
+
+### Cookies
+
+Las cookies son pequeños fragmentos de datos que el servidor almacena en el navegador web del usuario. Se utilizan habitualmente para la gestión de sesiones, el seguimiento de las preferencias del usuario y la personalización de las experiencias del usuario.
+
+El cliente envía cookies con cada solicitud al mismo servidor, lo que permite que el servidor identifique al usuario y mantenga el estado en todas las solicitudes. Esto sucede automáticamente una vez que el servidor configura la cookie, lo que la convierte en una forma conveniente de administrar las sesiones de usuario.
+
+### Local Storage
+
+El Local Storage es un mecanismo de almacenamiento web que permite almacenar datos en el navegador web del usuario. Proporciona una interfaz de almacenamiento de clave-valor simple y se utiliza comúnmente para conservar las preferencias del usuario, almacenar datos en caché y almacenar el estado de la aplicación.
+
+Proporciona una mayor capacidad de almacenamiento que las cookies (normalmente hasta 5-10 MB por dominio) y es accesible a través de las API de JavaScript.
+
+El almacenamiento local se utiliza comúnmente para almacenar en caché activos estáticos, almacenar preferencias de usuario y almacenar datos sin conexión en aplicaciones web progresivas (PWA).
+
+### Session Storage
+
+El Session Storage es similar al almacenamiento local, pero se borra cuando finaliza la sesión del usuario (es decir, cuando se cierra el navegador). Se utiliza habitualmente para almacenar datos temporales que no deben persistir entre sesiones.
+
+El uso del almacenamiento de sesiones puede ayudar a mejorar la seguridad al garantizar que los datos confidenciales no se almacenen más allá de la sesión del usuario.
+
+A menudo se utiliza para el almacenamiento temporal de datos, como datos de formularios y elementos del carrito de compras, que no deben persistir en las distintas sesiones del navegador.
+
+### IndexedDB
+
+IndexedDB es una API de bajo nivel para el almacenamiento del lado del cliente de cantidades significativas de datos estructurados, incluidos archivos/blobs.
+
+Proporciona una solución de almacenamiento más potente y flexible en comparación con el Local Storage y el Session Storage, pero requiere una lógica de programación más compleja.
+
+Se utiliza comúnmente para almacenar grandes conjuntos de datos, sincronización de datos sin conexión y consultas de datos complejas en aplicaciones web.
+
+> Algunas de las opciones anteriores se utilizan para almacenar datos de sesión en el lado del cliente, mientras que otras se utilizan para el almacenamiento y almacenamiento en caché de datos más generales.
+
+> La elección del mecanismo de gestión de estado depende de factores como el tipo de datos que se almacenan, los requisitos de la aplicación y la experiencia del usuario.
+
+# Autorización
+
+Al implementar la autenticación, también tendremos que verificar la identidad del usuario y asegurarnos de que tenga los permisos necesarios para acceder a los recursos solicitados en cada solicitud. Ahí es donde entra en juego la autorización.
+
+Este proceso implica validar las credenciales del usuario, administrar las sesiones del usuario y aplicar políticas de control de acceso basadas en el rol y los permisos del usuario.
+
+## Qué es un TOkes de Sesión (Session Token)?
+
+Un token de sesión es un identificador único que se utiliza para autenticar la sesión de un usuario. Normalmente se genera durante el proceso de autenticación y se utiliza para asociar a un usuario con sus datos de sesión en el servidor.
+
+> Es una práctica común almacenar tokens de sesión en el lado del cliente y enviarlos con cada solicitud para autenticar al usuario.
+
+Tener en cuenta que los tokens de sesión no están asociados únicamente con la autenticación basada en sesión, sino que también se pueden usar con la autenticación basada en tokens en forma de tokens portadores como JSON Web Tokens (JWT).
+
+Aquí, es un término general utilizado para referirse al identificador único utilizado para autenticar la sesión de un usuario.
+
+## Diferentes formas de almacenar sesiones para autorización
+
+Existen varios métodos que se utilizan comúnmente para almacenar tokens de sesión para verificar cada solicitud del cliente al servidor:
+
+### Cookies
+
+Los tokens de sesión suelen almacenarse como cookies en el navegador del cliente. El servidor establece una cookie que contiene el token de sesión durante el proceso de autenticación y el cliente envía automáticamente esta cookie con cada solicitud posterior.
+
+#### Ventajas
+
+1. Se envía automáticamente con cada solicitud, lo que simplifica la implementación.
+2. Las cookies tienen funciones de seguridad integradas, como los indicadores HttpOnly y Secure.
+
+#### Contras
+
+1. Vulnerable a ataques CSRF si no se protege adecuadamente.
+2. Limitado a la política del mismo origen, restringiendo las solicitudes de origen cruzado.
+3. De tamaño limitado y puede no ser adecuado para almacenar grandes cantidades de datos.
+
+### Encabezados de autorización / Authorization headers (Bearer tokens)
+
+Authorization headers, como JSON Web Tokens (JWT), son otro método común para almacenar tokens de sesión.
+
+Después de una autenticación exitosa, el servidor genera un token que contiene información del usuario y lo firma. Luego, este token se envía al cliente, generalmente en el cuerpo de la respuesta, y el cliente lo incluye en el encabezado de autorización de las solicitudes posteriores.
+
+#### Ventajas
+
+1. Los tokens contienen toda la información necesaria para la autenticación, lo que reduce la necesidad de almacenamiento del lado del servidor.
+2. Puede contener datos adicionales más allá de la autenticación, como roles de usuario.
+
+#### Contras
+
+1. Requiere un esfuerzo adicional para gestionar el ciclo de vida del token, incluida la expiración y la revocación.
+2. Vulnerable al robo de tokens si no está protegido adecuadamente (por ejemplo, a través de HTTPS)
+
+### Local Storage
+
+Los tokens de sesión también se pueden almacenar en el Local Storage del cliente, un mecanismo para almacenar datos de forma persistente en el lado del cliente más allá de la duración de una sesión.
+
+#### Ventajas
+
+1. Proporciona una mayor capacidad de almacenamiento en comparación con las cookies.
+2. Accesible a través de API de JavaScript, lo que permite una mayor flexibilidad en el manejo de datos de sesión.
+
+#### Contras
+
+1. No se envía automáticamente con cada solicitud como las cookies, sino que requiere su inclusión manual en las solicitudes.
+2. Vulnerable a ataques XSS si no se protege adecuadamente.
+
+### Session Storage
+
+De manera similar al almacenamiento local, los tokens de sesión se pueden almacenar en el almacenamiento de sesión, un mecanismo de almacenamiento web que almacena datos solo mientras dura la sesión del navegador.
+
+#### Ventajas
+
+1. Se borra automáticamente cuando finaliza la sesión del navegador, lo que mejora la seguridad.
+2. Accesible a través de API de JavaScript para almacenamiento temporal de datos.
+
+#### Contras
+
+1. Limitado a la duración de la sesión del navegador, requiriendo nueva autenticación después de la expiración de la sesión.
+2. No se envía automáticamente con cada solicitud como las cookies.
