@@ -636,3 +636,133 @@ De manera similar al almacenamiento local, los tokens de sesión se pueden almac
 
 1. Limitado a la duración de la sesión del navegador, requiriendo nueva autenticación después de la expiración de la sesión.
 2. No se envía automáticamente con cada solicitud como las cookies.
+
+# Manejo de Estado / State Management
+
+El manejo de estado en Next.js se refiere a cómo se administra y comparte la información entre los componentes de una aplicación web, para que puedan reflejar cambios y mantenerse sincronizados. Next.js, como framework basado en React, ofrece varias opciones para manejar el estado dependiendo de las necesidades de la aplicación.
+
+## Tipos de estado
+
+### Local
+
+Por lo general, implica la gestión de los datos dentro de un único componente o módulo de una aplicación. Este estado local es específico de ese componente y no es directamente accesible ni modificable por otras partes de la aplicación a menos que se transmita explícitamente como props o por otros medios.
+
+### Global
+
+Implica la gestión de datos a los que deben acceder y modificar varios componentes de la aplicación. Este estado global se almacena normalmente en una ubicación centralizada, como un almacén o contexto global, donde cualquier componente que lo necesite puede acceder a él y modificarlo sin necesidad de realizar props drilling ni pasar datos a través de varias capas de componentes.
+
+Principales librerías para el manejo del estado global:
+
+1. `Redux`: Redux ayuda a organizar los datos de la aplicación en un solo lugar utilizando actions y reducers.
+2. `Zustand`: Zustand es una manera simple de manejar los datos de la aplicación utilizando hooks de React.
+3. `Context` API: Context API comparte los datos en toda la aplicación sin necesidad de librerías adicionales.
+4. `Recoil`: Recoil hace que la gestión de datos en React sea más fácil con átomos y estados derivados.
+5. `MobX`: MobX hace que sea fácil ver y actualizar sus datos sin necesidad de configuración adicional.
+
+> La gestión de estado local se ocupa de los datos específicos de un solo componente, mientras que la gestión de estado global se ocupa de los datos que deben compartirse y a los que deben acceder múltiples componentes en toda la aplicación.
+
+## Manejo del estado en Next.js
+
+El uso de las bibliotecas o métodos que analizamos anteriormente en Next.js convertiría la página o componente en un componente del lado del cliente. Esto va en contra del núcleo de Next.js y sus capacidades del lado del servidor.
+
+Pasar todo al lado del cliente en Next.js equivaldría esencialmente a usar React.js plano. Dado que Redux, Context API, Zustand y otros son patrones basados ​​en Hooks, no podemos usarlos en el lado del servidor, al menos no por ahora. Ese es un problema.
+
+¿Por qué no podemos usar Hooks en el lado del servidor?
+
+Los Hooks de React se basan en el ciclo de vida del componente, que es específico del entorno de representación del lado del cliente.
+
+Los Hooks como useState, useEffect o cualquier otro no están disponibles en el servidor porque interactúan con el DOM, que no existe en el servidor.
+
+Sin embargo, se puedes simula algún comportamiento de Hook en el servidor usando bibliotecas como react-dom/server, pero no es lo mismo que los Hooks del lado del cliente.
+
+### Manejo del Estado de URL
+
+El manejo del estado por URL en aplicaciones de Next.js es útil para mantener estados a través de navegación y compartir enlaces que reflejan el estado actual de la aplicación. Esto se logra utilizando los parámetros de la URL (query params) o los segmentos de la misma (path params).
+
+Al administrar el estado a través de la URL, se puede compartir enlaces fácilmente y, cuando otra persona abra ese enlace, verá el mismo resultado que tú. Esto también ayuda a mejorar el SEO.
+
+Cuando se utiliza URL únicas para representar diferentes estados o páginas dentro del sitio web, cada URL sirve como un punto de entrada distinto para que los motores de búsqueda rastreen e indexen su contenido.
+
+Esto significa que todas las variaciones del contenido, como diferentes filtros, opciones de clasificación o paginación, tienen sus propias URL, lo que hace que sea más fácil para los motores de búsqueda descubrir y clasificar sus páginas adecuadamente.
+
+> En términos simples, imagina que tu sitio web es como una gran biblioteca y que cada URL es como una estantería única. Cuando organizas tus libros (contenido) en diferentes estanterías (URL), es más fácil para las personas (motores de búsqueda) encontrar el libro (contenido) específico que están buscando.
+
+Esta organización ayuda a mejorar la visibilidad y la clasificación del sitio web en los resultados de los motores de búsqueda porque los motores de búsqueda pueden comprender mejor la estructura y la relevancia del contenido.
+
+El uso de URL únicas para diferentes estados o páginas también facilita que los usuarios compartan contenido específico y que los motores de búsqueda comprendan el contexto de ese contenido, lo que en última instancia puede conducir a mejores clasificaciones en los motores de búsqueda para su sitio web.
+
+#### URL
+
+Una URL (Localizador Uniforme de Recursos/Uniform Resource Locators) con parámetros normalmente consta de varios componentes:
+
+1. `Scheme/Esquema`: especifica el protocolo utilizado para acceder al recurso, como `http://` o `https://`.
+2. `Domain/Dominio`:el nombre de dominio o la dirección IP del servidor que aloja el recurso.
+3. `Port/Puerto`: (opcional) especifica el número de puerto al que se debe enviar la solicitud. Los puertos predeterminados suelen omitirse (por ejemplo, puerto 80 para HTTP, puerto 443 para HTTPS).
+4. `Path/Ruta`: el recurso o punto final específico en el servidor, generalmente representado como una serie de directorios y nombres de archivos.
+5. `Query Parameters`: (también conocidos como `searchParams` en Next.js) Datos adicionales enviados al servidor como parte de la solicitud, que normalmente se utilizan para filtrar o modificar el recurso solicitado. Los parámetros de consulta se agregan a la URL después de un signo de interrogación `"?"` y se separan con el símbolo `"&"`.
+6. `Fragment`: (opcional) especifica una sección específica dentro del recurso solicitado, que suele usarse en páginas web para navegar a una sección en particular. Se indica mediante un signo numeral `"#"` seguido del identificador del fragmento.
+
+Podemos recuperar esta información de URL en Next.js de diferentes maneras:
+
+- `Pagina Principal`: Si estás en el archivo de la página principal, puedes acceder a la información a través de las props de la página.
+
+```js
+function Page({ params, searchParams }) {
+  return <h1>My Page</h1>;
+}
+
+export default Page;
+```
+
+Por ejemplo, si la URL se ve así: `/books/1234/?page=2&filter=latest`
+
+Entonces,
+
+- Los `params/parámetros` contendrán el valor `1234`
+- `searchParams` contendrá valores de `página` y `filtro`. Así es como se puede obtener la información.
+
+```js
+async function Page({ params, searchParams }) {
+  const { id } = await params;
+  const { page, filter } = await searchParmas;
+
+  return <h1>My Page</h1>;
+}
+export default Page;
+```
+
+Desde aquí, se puede elegir pasar estos valores a otros componentes o usar otras opciones para acceder a ellos específicamente dentro de ese componente. Y esa otra forma es:
+
+- `Hooks`: Next.js proporciona dos Hooks específicos, a saber, `useParams` y `useSearchParams` , para recuperar la información respectiva de la URL. Así es como podemos acceder a `params` (parte dinámica de la URL)
+
+```js
+"use client";
+
+import { useParams } from "next/navigation";
+
+function ExampleClientComponent() {
+  const params = useParams();
+
+  return <p>Example Client Component</p>;
+}
+
+export default ExampleClientComponent;
+```
+
+Podemos acceder a los parámetros de búsqueda (también conocidos como parámetros de consulta) de la URL de la misma manera, utilizando el Hook `useSearchParams`.
+
+```js
+"use client";
+
+import { useSearchParams } from "next/navigation";
+
+export default function SearchBar() {
+  const searchParams = useSearchParams();
+  const type = searchParams.get("type");
+
+  return <>Selected Type: {type}</>;
+}
+```
+
+El uso de Hooks implicaría convertir ese componente en un componente cliente.
+
